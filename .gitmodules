@@ -1,0 +1,3 @@
+[submodule "moar-sugar"]
+	path = moar-sugar
+	url = git@github.com:farnsworth2008/moar-sugar

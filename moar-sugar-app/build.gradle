@@ -1,0 +1,13 @@
+plugins {
+  id 'application'
+}
+
+application {
+  mainClassName = 'moar.sugar.example.MoarSugarExampleApp'
+}
+
+dependencies {
+  compile project(":moar-sugar")
+  compile "commons-dbcp:commons-dbcp:1.4"
+  runtime "mysql:mysql-connector-java:8.0.12"
+}
