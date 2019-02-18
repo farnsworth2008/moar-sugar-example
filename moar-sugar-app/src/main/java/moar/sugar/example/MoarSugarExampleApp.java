@@ -37,6 +37,8 @@ public class MoarSugarExampleApp {
     app.doMain(args);
   }
 
+  PrintStream out = System.out;
+
   private final MoarJson moarJson = MoarJson.getMoarJson();
 
   private final Map<String, String> config;
@@ -52,16 +54,15 @@ public class MoarSugarExampleApp {
 
   public void doMain(String[] args) {
     DataSource ds = getDataSource();
-    PrintStream out = System.out;
-    exampleSwallow(out);
-    exampleConvertToRuntime(out);
-    exampleRetry(out);
-    exampleTimeMethods(out);
-    exampleAync(out);
-    exampleDb(out, ds);
+    exampleSwallow();
+    exampleConvertToRuntime();
+    exampleRetry();
+    exampleTimeMethods();
+    exampleAync();
+    exampleDb(ds);
   }
 
-  void exampleAsyncStandard(PrintStream out) {
+  void exampleAsyncStandard() {
     out.println("  ASYNC METHODS WITH STANDARD JAVA");
     ExecutorService service = newFixedThreadPool(4);
     try {
@@ -69,17 +70,17 @@ public class MoarSugarExampleApp {
 
       for (int i = 0; i < 3; i++) {
         String message = "async " + i;
-        futures.add(service.submit(() -> methodOne(out, message)));
+        futures.add(service.submit(() -> methodOne(message)));
       }
 
       for (int i = 0; i < 3; i++) {
         String message = "async " + i;
-        futures.add(service.submit(() -> methodOne(out, message)));
+        futures.add(service.submit(() -> methodOne(message)));
       }
 
       for (int i = 0; i < 3; i++) {
         String message = "async " + i;
-        futures.add(service.submit(() -> methodThatThrows(out, message)));
+        futures.add(service.submit(() -> methodWithRetryableException(message)));
       }
 
       out.println("  async work started");
@@ -110,7 +111,7 @@ public class MoarSugarExampleApp {
     out.println();
   }
 
-  void exampleAsyncSugar(PrintStream out) {
+  void exampleAsyncSugar() {
     out.println("  ASYNC METHODS WITH MOAR SUGAR");
     AsyncService service = $(4);
     try {
@@ -118,17 +119,17 @@ public class MoarSugarExampleApp {
 
       for (int i = 0; i < 3; i++) {
         String message = "async " + i;
-        $(service, futures, () -> methodOne(out, message));
+        $(service, futures, () -> methodOne(message));
       }
 
       for (int i = 0; i < 3; i++) {
         String message = "async " + i;
-        $(service, futures, () -> methodTwo(out, message));
+        $(service, futures, () -> methodTwo(message));
       }
 
       for (int i = 0; i < 3; i++) {
         String message = "async " + i;
-        $(service, futures, () -> methodThatThrows(out, message));
+        $(service, futures, () -> methodWithRetryableException(message));
       }
 
       out.println("  async work started");
@@ -148,24 +149,24 @@ public class MoarSugarExampleApp {
     out.println();
   }
 
-  void exampleAync(PrintStream out) {
+  void exampleAync() {
     out.println("Example: Async Execution");
-    exampleAsyncStandard(out);
-    exampleAsyncSugar(out);
+    exampleAsyncStandard();
+    exampleAsyncSugar();
   }
 
-  void exampleConvertToRuntime(PrintStream out) {
+  void exampleConvertToRuntime() {
     out.println("Example: Convert to RuntimeException");
-    exampleConvertToRuntimeStandard(out);
-    exampleConvertToRuntimeSugar(out);
+    exampleConvertToRuntimeStandard();
+    exampleConvertToRuntimeSugar();
   }
 
-  void exampleConvertToRuntimeStandard(PrintStream out) {
+  void exampleConvertToRuntimeStandard() {
     out.println("  RUNTIME EXCEPTION WITH STANDARD JAVA");
     try {
 
       try {
-        methodThatThrows(out, "two");
+        methodWithRetryableException("two");
       } catch (Exception e) {
         throw new RuntimeException(e);
       }
@@ -176,17 +177,17 @@ public class MoarSugarExampleApp {
     out.println();
   }
 
-  void exampleConvertToRuntimeSugar(PrintStream out) {
+  void exampleConvertToRuntimeSugar() {
     out.println("  RUNTIME EXCEPTION WITH MOAR SUGAR");
     try {
-      require(() -> methodThatThrows(out, "two"));
+      require(() -> methodWithRetryableException("two"));
     } catch (RuntimeException e) {
       out.println("  e: " + e.getCause().getMessage());
     }
     out.println();
   }
 
-  void exampleDb(PrintStream out, DataSource ds) {
+  void exampleDb(DataSource ds) {
     out.println("Example: DB");
 
     // simple way to executeSql against a DataSource
@@ -255,20 +256,20 @@ public class MoarSugarExampleApp {
     }
   }
 
-  void exampleRetry(PrintStream out) {
+  void exampleRetry() {
     out.println("Example: Retry methods");
-    exampleRetryStandard(out);
-    exampleRetrySugar(out);
+    exampleRetryStandard();
+    exampleRetrySugar();
   }
 
-  void exampleRetryStandard(PrintStream out) {
+  void exampleRetryStandard() {
     out.println("  RETRY EXCEPTION WITH STANDARD JAVA");
     try {
       int tries = 3;
       Exception lastException = null;
       while (tries-- > 0) {
         try {
-          methodThatThrows(out, "three");
+          methodWithRuntimeException("three");
         } catch (Exception e) {
           lastException = e;
           Thread.sleep(10);
@@ -282,10 +283,10 @@ public class MoarSugarExampleApp {
     out.println();
   }
 
-  void exampleRetrySugar(PrintStream out) {
+  void exampleRetrySugar() {
     out.println("  RETRY EXCEPTION WITH MOAR SUGAR");
     try {
-      retryable(3, 10, () -> methodThatThrows(out, "three"));
+      retryable(3, 10, () -> methodWithRetryableException("three"));
     } catch (Exception e) {
       out.println("  We tried three times.");
       out.println("  e: " + e.getMessage());
@@ -293,17 +294,17 @@ public class MoarSugarExampleApp {
     out.println();
   }
 
-  void exampleSwallow(PrintStream out) {
+  void exampleSwallow() {
     out.println("Example: Swallow Exception");
-    exampleSwallowStandard(out);
-    exampleSwallowSugar(out);
+    exampleSwallowStandard();
+    exampleSwallowSugar();
   }
 
-  void exampleSwallowStandard(PrintStream out) {
+  void exampleSwallowStandard() {
     out.println("  SWALLOW WITH STANDARD JAVA");
     String x;
     try {
-      x = methodThatThrows(out, "one");
+      x = methodWithRetryableException("one");
     } catch (Exception e) {
       x = null;
     }
@@ -311,43 +312,43 @@ public class MoarSugarExampleApp {
     out.println();
   }
 
-  void exampleSwallowSugar(PrintStream out) {
+  void exampleSwallowSugar() {
     out.println("  SWALLOW WITH MOAR SUGAR");
-    String x = swallow(() -> methodThatThrows(out, "one"));
+    String x = swallow(() -> methodWithRetryableException("one"));
     out.println("  x:" + x);
     out.println();
   }
 
-  void exampleTimeMethods(PrintStream out) {
+  void exampleTimeMethods() {
     out.println("Example 4, Time methods");
-    exampleTimeMethodsStandard(out);
-    exampleTimeMethodsSugar(out);
+    exampleTimeMethodsStandard();
+    exampleTimeMethodsSugar();
   }
 
-  void exampleTimeMethodsStandard(PrintStream out) {
+  void exampleTimeMethodsStandard() {
     out.println("  TIME METHODS WITH STANDARD JAVA");
     long startAll = System.currentTimeMillis();
 
     long start, time1, time1Min, time1Max, time2, time2Min, time2Max, timeAll;
 
     start = System.currentTimeMillis();
-    methodOne(out, "time 1.0");
+    methodOne("time 1.0");
     time1 = System.currentTimeMillis() - start;
     time1Min = time1Max = time1;
 
     start = System.currentTimeMillis();
-    methodOne(out, "time 1.1");
+    methodOne("time 1.1");
     time1 = System.currentTimeMillis() - start;
     time1Min = Math.min(time1, time1Min);
     time1Max = Math.max(time1, time1Max);
 
     start = System.currentTimeMillis();
-    methodTwo(out, "time 2.0");
+    methodTwo("time 2.0");
     time2 = System.currentTimeMillis() - start;
     time2Min = time2Max = time2;
 
     start = System.currentTimeMillis();
-    methodTwo(out, "time 2.1");
+    methodTwo("time 2.1");
     time2 = System.currentTimeMillis() - start;
     time2Min = Math.min(time2, time2Min);
     time2Max = Math.max(time2, time2Max);
@@ -362,13 +363,13 @@ public class MoarSugarExampleApp {
     out.println();
   }
 
-  void exampleTimeMethodsSugar(PrintStream out) {
+  void exampleTimeMethodsSugar() {
     out.println("  TIME METHODS WITH MOAR SUGAR");
     MoarThreadReport report = $$(() -> {
-      require(() -> $("One", () -> methodOne(out, "hello 1.1")));
-      require(() -> $("One", () -> methodOne(out, "hello 1.2")));
-      require(() -> $("Two", () -> methodTwo(out, "hello 2.1")));
-      require(() -> $("Two", () -> methodTwo(out, "hello 2.1")));
+      require(() -> $("One", () -> methodOne("hello 1.1")));
+      require(() -> $("One", () -> methodOne("hello 1.2")));
+      require(() -> $("Two", () -> methodTwo("hello 2.1")));
+      require(() -> $("Two", () -> methodTwo("hello 2.1")));
     });
 
     MoarThreadTracker tracker1 = report.getTracker("One");
@@ -397,7 +398,7 @@ public class MoarSugarExampleApp {
     return bds;
   }
 
-  private String methodOne(PrintStream out, String message) {
+  private String methodOne(String message) {
     randomSleep();
     String threadName = Thread.currentThread().getName();
     out.println("  methodOne: " + message + " " + threadName);
@@ -405,18 +406,26 @@ public class MoarSugarExampleApp {
     return "Hello from method One with " + message;
   }
 
-  private String methodThatThrows(PrintStream out, String message) throws Exception {
-    randomSleep();
-    out.println("  methodThatThrows for " + message);
-    RuntimeException cause = new RuntimeException("Demo Ex for " + message);
-    throw new RetryableException(cause);
-  }
-
-  private String methodTwo(PrintStream out, String message) {
+  private String methodTwo(String message) {
     randomSleep();
     out.println("  methodTwo: " + message + " " + Thread.currentThread().getName());
     randomSleep();
     return "Hello from method Two with " + message;
+  }
+
+  private String methodWithRetryableException(String message) throws Exception {
+    try {
+      methodWithRuntimeException(message);
+      return null;
+    } catch (RuntimeException e) {
+      throw new RetryableException(e);
+    }
+  }
+
+  private void methodWithRuntimeException(String message) {
+    randomSleep();
+    out.println("  methodThatThrows for " + message);
+    throw new RuntimeException("Demo Ex for " + message);
   }
 
   private void randomSleep() {
