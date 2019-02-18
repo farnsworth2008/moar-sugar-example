@@ -1,4 +1,4 @@
-package moar.sugar.example;
+package moar.sugar.example.schema;
 
 import java.util.Date;
 
