@@ -37,9 +37,9 @@ public class MoarSugarExampleApp {
     app.doMain(args);
   }
 
-  private final DataSource ds;
+  private final MoarJson moarJson = MoarJson.getMoarJson();
 
-  MoarJson moarJson = MoarJson.getMoarJson();
+  private final Map<String, String> config;
 
   public MoarSugarExampleApp() {
     String configFilename = "moar_example_app_config.json";
@@ -47,32 +47,18 @@ public class MoarSugarExampleApp {
       configFilename = "../" + configFilename;
     }
 
-    Map<String, String> config;
     config = moarJson.fromJsonFile(configFilename, HashMap.class);
-
-    StringBuilder jdbcBuilder = new StringBuilder();
-    jdbcBuilder.append("moar:moar.sugar.example:jdbc:mysql://");
-    jdbcBuilder.append(config.get("host"));
-    jdbcBuilder.append("/");
-    jdbcBuilder.append(config.get("db"));
-    jdbcBuilder.append("?useSSL=false&allowPublicKeyRetrieval=true");
-    String jdbcUrl = jdbcBuilder.toString();
-
-    BasicDataSource bds = new BasicDataSource();
-    bds.setUrl(jdbcUrl);
-    bds.setUsername(config.get("user"));
-    bds.setPassword(config.get("password"));
-    ds = bds;
   }
 
   public void doMain(String[] args) {
+    DataSource ds = getDataSource();
     PrintStream out = System.out;
     exampleSwallow(out);
     exampleConvertToRuntime(out);
     exampleRetry(out);
     exampleTimeMethods(out);
     exampleAync(out);
-    exampleDb(out);
+    exampleDb(out, ds);
   }
 
   void exampleAsyncStandard(PrintStream out) {
@@ -98,7 +84,6 @@ public class MoarSugarExampleApp {
 
       out.println("  async work started");
       List<Exception> exceptions = new ArrayList<>();
-
       for (Future<String> future : futures) {
         try {
           future.get();
@@ -106,7 +91,6 @@ public class MoarSugarExampleApp {
           exceptions.add(e);
         }
       }
-
       out.println("  async work complete");
 
       int i = 0;
@@ -202,12 +186,13 @@ public class MoarSugarExampleApp {
     out.println();
   }
 
-  void exampleDb(PrintStream out) {
+  void exampleDb(PrintStream out, DataSource ds) {
     out.println("Example: DB");
 
+    // simple way to executeSql against a DataSource
     wake(ds).executeSql("delete from pet");
 
-    //style 1: Upsert using a fully fluent style
+    // style 1: Upsert using a fully fluent style
     PetRow pet1 = wake(PetRow.class).of(ds).upsert(row -> {
       row.setName("Donut");
       row.setOwner("Mark");
@@ -217,7 +202,7 @@ public class MoarSugarExampleApp {
     });
     out.println("  upsert pet #1: " + pet1.getId() + ", " + pet1.getName());
 
-    //style 2: Upsert using style where we hold the repository reference.
+    // style 2: Upsert using style where we hold the repository reference.
     WokenWithSession<PetRow> repo = wake(PetRow.class).of(ds);
     PetRow pet2 = repo.define();
     pet2.setName("Tig");
@@ -245,6 +230,7 @@ public class MoarSugarExampleApp {
     // Delete
     repo.delete(foundPet);
 
+    // Upsert to add row for query
     repo.upsert(row -> {
       row.setName("Twyla");
       row.setOwner("Kendra");
@@ -253,6 +239,7 @@ public class MoarSugarExampleApp {
       row.setBirth(toUtilDate(2012, 6, 5));
     });
 
+    // Upsert to add row for query
     repo.upsert(row -> {
       row.setName("Jasper");
       row.setOwner("Kendra");
@@ -261,8 +248,8 @@ public class MoarSugarExampleApp {
       row.setBirth(toUtilDate(2012, 9, 1));
     });
 
-    // Find with a query
-    List<PetRow> petList = repo.list("select [*] from pet as PetRow where species=?", "Cat");
+    // Find with a where clause
+    List<PetRow> petList = repo.list("where species=?", "Cat");
     for (PetRow petItem : petList) {
       out.println("  found: " + petItem.getName() + ", " + petItem.getOwner());
     }
@@ -392,6 +379,22 @@ public class MoarSugarExampleApp {
     out.println("  methodTwo max of " + tracker2.getMax() + " ms.");
     out.println("  methods took total of " + report.getTime() + " ms.");
     out.println();
+  }
+
+  private BasicDataSource getDataSource() {
+    StringBuilder jdbcBuilder = new StringBuilder();
+    jdbcBuilder.append("moar:moar.sugar.example:jdbc:mysql://");
+    jdbcBuilder.append(config.get("host"));
+    jdbcBuilder.append("/");
+    jdbcBuilder.append(config.get("db"));
+    jdbcBuilder.append("?useSSL=false&allowPublicKeyRetrieval=true");
+    String jdbcUrl = jdbcBuilder.toString();
+
+    BasicDataSource bds = new BasicDataSource();
+    bds.setUrl(jdbcUrl);
+    bds.setUsername(config.get("user"));
+    bds.setPassword(config.get("password"));
+    return bds;
   }
 
   private String methodOne(PrintStream out, String message) {
