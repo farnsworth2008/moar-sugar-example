@@ -12,13 +12,14 @@ import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import moar.sugar.SafeResult;
-import moar.sugar.thread.MoarThreadSugar.AsyncService;
+import moar.sugar.thread.MoarAsyncProvider;
+import moar.sugar.thread.MoarExecutorServiceAdapter;
 
-public class AsyncExample
+class AsyncExample
     extends
     BaseExample {
 
-  public AsyncExample(PrintStream out) {
+  AsyncExample(PrintStream out) {
     super(out);
   }
 
@@ -73,7 +74,7 @@ public class AsyncExample
 
   void exampleAsyncSugar() {
     out.println("  ASYNC METHODS WITH MOAR SUGAR");
-    AsyncService service = $(4);
+    MoarAsyncProvider service = $(4);
     try {
       Vector<Future<String>> futures = $(String.class);
 

@@ -8,11 +8,11 @@ import javax.sql.DataSource;
 import moar.awake.WokenWithSession;
 import moar.sugar.example.schema.PetRow;
 
-public class DatabaseExample
+class DatabaseExample
     extends
     DatabaseBaseExample {
 
-  public DatabaseExample(PrintStream out) {
+  DatabaseExample(PrintStream out) {
     super(out);
   }
 

@@ -2,12 +2,13 @@ package moar.sugar.example;
 
 import static moar.sugar.Sugar.retryable;
 import java.io.PrintStream;
+import moar.sugar.RetryableException;
 
-public class RetryExample
+class RetryExample
     extends
     BaseExample {
 
-  public RetryExample(PrintStream out) {
+  RetryExample(PrintStream out) {
     super(out);
   }
 

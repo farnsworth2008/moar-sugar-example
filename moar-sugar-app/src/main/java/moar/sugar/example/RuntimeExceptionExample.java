@@ -3,11 +3,11 @@ package moar.sugar.example;
 import static moar.sugar.Sugar.require;
 import java.io.PrintStream;
 
-public class RuntimeExceptionExample
+class RuntimeExceptionExample
     extends
     BaseExample {
 
-  public RuntimeExceptionExample(PrintStream out) {
+  RuntimeExceptionExample(PrintStream out) {
     super(out);
   }
 

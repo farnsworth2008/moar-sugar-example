@@ -7,11 +7,11 @@ import java.io.PrintStream;
 import moar.sugar.thread.MoarThreadReport;
 import moar.sugar.thread.MoarThreadTracker;
 
-public class TimeMethodsExample
+class TimeMethodsExample
     extends
     BaseExample {
 
-  public TimeMethodsExample(PrintStream out) {
+  TimeMethodsExample(PrintStream out) {
     super(out);
   }
 

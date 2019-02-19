@@ -5,7 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import moar.driver.Driver;
 
+/**
+ * Example Application for Moar Sugar
+ *
+ * @author Mark Farnsworth
+ */
 public class MoarSugarExampleApp {
+  /**
+   * Entry Point for launch.
+   *
+   * @param args
+   *   Arguments for launch.
+   */
   public static void main(String[] args) {
     Driver.init();
     PrintStream out = System.out;

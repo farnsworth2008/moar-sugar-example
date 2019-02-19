@@ -7,14 +7,14 @@ import java.util.Map;
 import org.apache.commons.dbcp.BasicDataSource;
 import moar.sugar.MoarJson;
 
-public abstract class DatabaseBaseExample
+abstract class DatabaseBaseExample
     extends
     BaseExample {
 
   protected final Map<String, String> config;
   protected final MoarJson moarJson = MoarJson.getMoarJson();
 
-  public DatabaseBaseExample(PrintStream out) {
+  DatabaseBaseExample(PrintStream out) {
     super(out);
     String configFilename = "moar_example_app_config.json";
     if (new File(configFilename).exists() == false) {

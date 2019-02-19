@@ -3,11 +3,11 @@ package moar.sugar.example;
 import static moar.sugar.Sugar.swallow;
 import java.io.PrintStream;
 
-public class SwallowExample
+class SwallowExample
     extends
     BaseExample {
 
-  public SwallowExample(PrintStream out) {
+  SwallowExample(PrintStream out) {
     super(out);
   }
 

@@ -4,12 +4,12 @@ import static moar.sugar.Sugar.require;
 import java.io.PrintStream;
 import moar.sugar.RetryableException;
 
-public abstract class BaseExample
+abstract class BaseExample
     implements
     Runnable {
   final PrintStream out;
 
-  public BaseExample(PrintStream out) {
+  BaseExample(PrintStream out) {
     this.out = out;
   }
 

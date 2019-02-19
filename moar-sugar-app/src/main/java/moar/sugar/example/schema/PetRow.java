@@ -8,6 +8,9 @@ import moar.sugar.example.schema.MoarSugarExampleSchema.OwnerColumn;
 import moar.sugar.example.schema.MoarSugarExampleSchema.SexColumn;
 import moar.sugar.example.schema.MoarSugarExampleSchema.SpeciesColumn;
 
+/**
+ * Example definition for a ROW.
+ */
 public interface PetRow
     extends
     IdColumnAsAutoLong,
