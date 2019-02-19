@@ -5,7 +5,11 @@ Stuff to make Java sweet!
 Setup
 -----
 
-After you clone this repo you need to run `./init.sh` to initialize things.  In particular, init will clone the `git@github.com:farnsworth2008/moar-sugar` that you need in order to build and run the example code in this repository. 
+```bash
+git clone git@github.com:farnsworth2008/moar-sugar-example
+cd moar-sugar-example
+./init.sh
+```
 
 To run all the examples, you need a mysql database.
 
@@ -19,12 +23,13 @@ GRANT ALL PRIVILEGES ON moar_sugar_example_db.* TO 'moar_example_user'@'localhos
 We also need a config file.
 
 ```
-echo "{
-\"host\": \"localhost:3306\",
-\"db\": \"moar_sugar_example_db\",
-\"user\": \"moar_example_user\",
-\"password\": \"moar_example_password\"
-}" > moar_example_app_config.json
+echo "[
+db-host: localhost,
+db-port: 3306,
+db-name: moar_sugar_example_db,
+db-user: moar_example_user,
+db-password: moar_example_password
+]" | moar-json > moar_example_app_config.json
 ```
 
 With the database and config file you can run the sample.
