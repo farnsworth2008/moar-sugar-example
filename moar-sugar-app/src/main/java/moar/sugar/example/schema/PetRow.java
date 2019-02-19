@@ -1,6 +1,6 @@
 package moar.sugar.example.schema;
 
-import moar.awake.WakeableRow;
+import moar.awake.WakeableRow.IdColumnAsAutoLong;
 import moar.sugar.example.schema.MoarSugarExampleSchema.BirthColumn;
 import moar.sugar.example.schema.MoarSugarExampleSchema.DeathColumn;
 import moar.sugar.example.schema.MoarSugarExampleSchema.NameColumn;
@@ -10,7 +10,7 @@ import moar.sugar.example.schema.MoarSugarExampleSchema.SpeciesColumn;
 
 public interface PetRow
     extends
-    WakeableRow.IdColumnAsAutoLong,
+    IdColumnAsAutoLong,
     NameColumn,
     OwnerColumn,
     SpeciesColumn,
