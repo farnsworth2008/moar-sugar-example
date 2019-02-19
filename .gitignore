@@ -3,8 +3,10 @@
 .gradle
 .project
 .settings
+/gradle
+/gradlew
 bin
 build
-out
-moar_example_app_config.json
 moar-sugar
+moar_example_app_config.json
+out

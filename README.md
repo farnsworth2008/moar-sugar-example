@@ -23,13 +23,12 @@ GRANT ALL PRIVILEGES ON moar_sugar_example_db.* TO 'moar_example_user'@'localhos
 We also need a config file.
 
 ```
-echo "[
-db-host: localhost,
-db-port: 3306,
-db-name: moar_sugar_example_db,
-db-user: moar_example_user,
-db-password: moar_example_password
-]" | moar-json > moar_example_app_config.json
+echo '{
+host: "localhost:3306",
+db: moar_sugar_example_db,
+user: moar_example_user,
+password: moar_example_password
+}' | moar-json > moar_example_app_config.json
 ```
 
 With the database and config file you can run the sample.
