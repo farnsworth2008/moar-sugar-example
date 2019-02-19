@@ -62,12 +62,12 @@ public class TimeMethodsExample
       require(() -> $("Two", () -> methodTwo("hello 2.1")));
     });
 
-    MoarThreadTracker tracker1 = report.getTracker("One");
-    out.println("  methodOne min of " + tracker1.getMin() + " ms.");
-    MoarThreadTracker tracker2 = report.getTracker("Two");
-    out.println("  methodTwo min of " + tracker2.getMin() + " ms.");
-    out.println("  methodOne max of " + tracker1.getMax() + " ms.");
-    out.println("  methodTwo max of " + tracker2.getMax() + " ms.");
+    MoarThreadTracker time1 = report.getTracker("One");
+    MoarThreadTracker time2 = report.getTracker("Two");
+    out.println("  methodOne min of " + time1.getMin() + " ms.");
+    out.println("  methodTwo min of " + time2.getMin() + " ms.");
+    out.println("  methodOne max of " + time1.getMax() + " ms.");
+    out.println("  methodTwo max of " + time2.getMax() + " ms.");
     out.println("  methods took total of " + report.getTime() + " ms.");
     out.println();
   }
