@@ -13,7 +13,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import moar.sugar.SafeResult;
 import moar.sugar.thread.MoarAsyncProvider;
-import moar.sugar.thread.MoarExecutorServiceAdapter;
 
 class AsyncExample
     extends
