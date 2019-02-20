@@ -1,9 +1,9 @@
 set -e
-git clone git@github.com:farnsworth2008/moar-sugar
-cp -r moar-sugar/gradle .
-cp moar-sugar/gradlew .
+git clone git@github.com:farnsworth2008/moar-sugar || true
+cd moar-sugar
+./init.sh
+cp -r gradle ..
+cp gradlew ..
+cd ..
 ./gradlew build eclipse
-cd moar-sugar/cli
-npm install babel-register babel-preset-env --save
-npm run-script build
-npm install -g
+git checkout HEAD --  moar-sugar-app/.settings
