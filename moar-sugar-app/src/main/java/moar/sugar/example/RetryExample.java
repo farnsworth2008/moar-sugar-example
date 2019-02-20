@@ -19,10 +19,14 @@ class RetryExample
       while (tries-- > 0) {
         try {
           methodWithRuntimeException("three");
+          return;
         } catch (Exception e) {
           lastException = e;
           Thread.sleep(10);
         }
+      }
+      if (lastException == null) {
+        throw new NullPointerException();
       }
       throw lastException;
     } catch (Exception e) {
