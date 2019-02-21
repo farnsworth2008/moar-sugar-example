@@ -3,9 +3,6 @@ package moar.sugar.example;
 import static moar.awake.Waker.wake;
 import static moar.sugar.Sugar.toUtilDate;
 import java.io.PrintStream;
-import java.util.List;
-import javax.sql.DataSource;
-import moar.awake.WokenWithSession;
 import moar.sugar.example.schema.PetRow;
 
 class DatabaseExample
@@ -18,7 +15,7 @@ class DatabaseExample
 
   @Override
   public void run() {
-    DataSource ds = getDataSource();
+    var ds = getDataSource();
 
     out.println("Example: DB");
 
@@ -26,7 +23,7 @@ class DatabaseExample
     wake(ds).executeSql("delete from pet");
 
     // style 1: Upsert using a fully fluent style
-    PetRow pet1 = wake(PetRow.class).of(ds).upsert(row -> {
+    var pet1 = wake(PetRow.class).of(ds).upsert(row -> {
       row.setName("Donut");
       row.setOwner("Mark");
       row.setSex("F");
@@ -36,7 +33,7 @@ class DatabaseExample
     out.println("  upsert pet #1: " + pet1.getId() + ", " + pet1.getName());
 
     // style 2: Upsert using style where we hold the repository reference.
-    WokenWithSession<PetRow> repo = wake(PetRow.class).of(ds);
+    var repo = wake(PetRow.class).of(ds);
     PetRow pet2 = repo.define();
     pet2.setName("Tig");
     pet2.setOwner("None");
@@ -48,7 +45,7 @@ class DatabaseExample
     Long pet2Id = pet2.getId();
 
     // Find with ID and update
-    PetRow foundPet = repo.id(pet2Id).find();
+    var foundPet = repo.id(pet2Id).find();
     out.println("  found: " + foundPet.getName());
     foundPet.setOwner("Mark");
     repo.update(foundPet);
@@ -82,7 +79,7 @@ class DatabaseExample
     });
 
     // Find with a where clause
-    List<PetRow> petList = repo.list("where species=?", "Cat");
+    var petList = repo.list("where species=?", "Cat");
     for (PetRow petItem : petList) {
       out.println("  found: " + petItem.getName() + ", " + petItem.getOwner());
     }

@@ -24,9 +24,9 @@ We also need a config file.
 
 ```
 echo '{
-host: "localhost:3306",
-db: moar_sugar_example_db,
-user: moar_example_user,
+host: "localhost:3306"
+db: moar_sugar_example_db
+user: moar_example_user
 password: moar_example_password
 }' | moar-json > moar_example_app_config.json
 ```

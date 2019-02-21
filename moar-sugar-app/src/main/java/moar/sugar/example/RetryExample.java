@@ -1,6 +1,6 @@
 package moar.sugar.example;
 
-import static moar.sugar.Sugar.retryable;
+import static moar.sugar.Sugar.retry;
 import java.io.PrintStream;
 
 class RetryExample
@@ -11,47 +11,16 @@ class RetryExample
     super(out);
   }
 
-  void exampleRetryStandard() {
-    out.println("  RETRY EXCEPTION WITH STANDARD JAVA");
-    try {
-      int tries = 3;
-      Exception lastException = null;
-      while (tries-- > 0) {
-        try {
-          methodWithRuntimeException("three");
-          return;
-        } catch (Exception e) {
-          lastException = e;
-          Thread.sleep(10);
-        }
-      }
-      if (lastException == null) {
-        throw new NullPointerException();
-      }
-      throw lastException;
-    } catch (Exception e) {
-      out.println("  We tried three times.");
-      out.println("  e: " + e.getMessage());
-    }
-    out.println();
-  }
-
-  void exampleRetrySugar() {
-    out.println("  RETRY EXCEPTION WITH MOAR SUGAR");
-    try {
-      retryable(3, 10, () -> methodWithRetryableException("three"));
-    } catch (Exception e) {
-      out.println("  We tried three times.");
-      out.println("  e: " + e.getMessage());
-    }
-    out.println();
-  }
-
   @Override
   public void run() {
     out.println("Example: Retry methods");
-    exampleRetryStandard();
-    exampleRetrySugar();
+    try {
+      retry(3, 10, () -> methodWithRetryableException("three"));
+    } catch (Exception e) {
+      out.println("  We tried three times.");
+      out.println("  e: " + e.getMessage());
+    }
+    out.println();
   }
 
 }

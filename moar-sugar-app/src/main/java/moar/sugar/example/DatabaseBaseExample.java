@@ -1,5 +1,6 @@
 package moar.sugar.example;
 
+import static moar.sugar.MoarJson.getMoarJson;
 import java.io.File;
 import java.io.PrintStream;
 import java.util.HashMap;
@@ -12,8 +13,9 @@ abstract class DatabaseBaseExample
     BaseExample {
 
   protected final Map<String, String> config;
-  protected final MoarJson moarJson = MoarJson.getMoarJson();
+  protected final MoarJson moarJson = getMoarJson();
 
+  @SuppressWarnings("unchecked")
   DatabaseBaseExample(PrintStream out) {
     super(out);
     String configFilename = "moar_example_app_config.json";
@@ -24,15 +26,15 @@ abstract class DatabaseBaseExample
   }
 
   protected BasicDataSource getDataSource() {
-    StringBuilder jdbcBuilder = new StringBuilder();
-    jdbcBuilder.append("moar:moar.sugar.example:jdbc:mysql://");
-    jdbcBuilder.append(config.get("host"));
-    jdbcBuilder.append("/");
-    jdbcBuilder.append(config.get("db"));
-    jdbcBuilder.append("?useSSL=false&allowPublicKeyRetrieval=true");
-    String jdbcUrl = jdbcBuilder.toString();
+    var builder = new StringBuilder();
+    builder.append("moar:moar.sugar.example:jdbc:mysql://");
+    builder.append(config.get("host"));
+    builder.append("/");
+    builder.append(config.get("db"));
+    builder.append("?useSSL=false&allowPublicKeyRetrieval=true");
+    var jdbcUrl = builder.toString();
 
-    BasicDataSource bds = new BasicDataSource();
+    var bds = new BasicDataSource();
     bds.setUrl(jdbcUrl);
     bds.setUsername(config.get("user"));
     bds.setPassword(config.get("password"));
