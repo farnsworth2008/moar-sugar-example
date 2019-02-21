@@ -21,8 +21,10 @@ class AsyncExample
 
     out.println("Example: Async Execution");
 
-    /* [require] shorthand to require everything in the block to complete
-     * without exception. */
+    /* The 'require( () -> {} )' method makes sure that if anything in the
+     * block fails an exception is thrown (with RuntimeException wrapping for
+     * checked exceptions). It's a non magic version of the also very useful
+     * Lombok's @SneakyThrows idea. */
     require(() -> {
 
       /* $ shorthand for a service using 4 threads. */
@@ -52,7 +54,7 @@ class AsyncExample
         List<SafeResult<String>> results = $(futures);
         out.println("  async work complete");
 
-        /* easy to walk the result list */
+        /* easily to walk the result list without fear of exceptions */
         var i = 0;
         for (var result : results) {
           var futureThrew = result.thrown() == null;
