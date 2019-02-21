@@ -5,8 +5,6 @@ import static java.lang.String.format;
 import static moar.sugar.Sugar.require;
 import static moar.sugar.thread.MoarThreadSugar.$;
 import java.io.PrintStream;
-import java.util.List;
-import moar.sugar.SafeResult;
 
 class AsyncExample
     extends
@@ -51,7 +49,7 @@ class AsyncExample
 
         /* $ shorthand to wait for all futures to *safely* complete */
         out.println("  async work started");
-        List<SafeResult<String>> results = $(futures);
+        var results = $(futures);
         out.println("  async work complete");
 
         /* easily to walk the result list without fear of exceptions */
