@@ -2,9 +2,10 @@ package moar.sugar.example;
 
 import static java.lang.String.format;
 import static moar.sugar.Sugar.require;
-import static moar.sugar.Sugar.swallow;
 import static moar.sugar.thread.MoarThreadSugar.$;
 import java.io.PrintStream;
+import java.util.List;
+import moar.sugar.SafeResult;
 
 class AsyncExample
     extends
@@ -40,13 +41,12 @@ class AsyncExample
 
         /* $ shorthand to wait for all futures to complete */
         out.println("  async work started");
-        swallow(() -> $(futures));
+        List<SafeResult<String>> results = $(futures);
         out.println("  async work complete");
 
         /* $ shorthand to get a safe result from a future */
         var i = 0;
-        for (var future : futures) {
-          var result = $(future);
+        for (var result : results) {
           var futureThrew = result.thrown() == null;
           var displayValue = futureThrew ? result.get() : result.thrown().getMessage();
           out.println(format("  futures[%d]: %s", ++i, displayValue));
