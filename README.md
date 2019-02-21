@@ -34,5 +34,5 @@ password: moar_example_password
 With the database and config file you can run the sample.
 
 ```
-./gradlew run
+./run.sh
 ```
