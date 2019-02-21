@@ -23,7 +23,7 @@ public class MoarSugarExampleApp {
     examples.add(new AsyncExample(out));
     examples.add(new RetryExample(out));
     examples.add(new DatabaseExample(out));
-    examples.add(new RuntimeExceptionExample(out));
+    examples.add(new SafelyExample(out));
     examples.add(new TimeMethodsExample(out));
     for (var example : examples) {
       example.run();

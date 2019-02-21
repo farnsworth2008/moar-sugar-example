@@ -9,6 +9,7 @@ import java.util.Date;
  */
 @SuppressWarnings("javadoc")
 public interface MoarSugarExampleSchema {
+
   public interface BirthColumn {
     Date getBirth();
     void setBirth(Date value);
