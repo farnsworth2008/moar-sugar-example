@@ -8,6 +8,10 @@ Setup
 The setup for this project has been tested on MacOS 10.14.3 (18D109), OpenJDK 11.0.2, MySQL 8.0.12, Node v11.7.0, and NPM 6.8.0.
 
 ```bash
+git clone git@github.com:moar-stuff/moar-sugar
+cd moar-sugar
+./moar-setup.sh
+cd ..
 git clone git@github.com:moar-stuff/moar-sugar-example
 cd moar-sugar-example
 ./init.sh
