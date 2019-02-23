@@ -14,7 +14,7 @@ mkdir -p ~/modules
 cd ~/modules
 git clone git@github.com:moar-stuff/moar-sugar
 cd moar-sugar
-./moar-setup.sh
+./build.sh
 cd ..
 ```
 
