@@ -7,18 +7,16 @@ Setup
 
 The setup for this project has been tested on MacOS 10.14.3 (18D109), OpenJDK 11.0.2, MySQL 8.0.12, Node v11.7.0, and NPM 6.8.0.
 
-The moar-sugar module scripts require install into `~/modules`!
+The moar-sugar module management requires clone into `~/modules`!
+
+
+## Step 1, Install `moar-cli`
 
 ```bash
-mkdir -p ~/modules
-cd ~/modules
-git clone git@github.com:moar-stuff/moar-sugar
-cd moar-sugar
-./build.sh
-cd ..
+curl -sL https://tinyurl.com/moar-cli | sh
 ```
 
-Also install the example project.
+## Step 2, Clone and initalize example project
 
 ```bash
 cd ~/modules
