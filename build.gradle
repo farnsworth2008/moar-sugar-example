@@ -6,8 +6,8 @@ subprojects {
 
   repositories {
     jcenter()
-    maven { url "https://oss.sonatype.org/content/groups/public/" }
     maven { url "http://repo.maven.apache.org/maven2" }
+    maven { url "https://oss.sonatype.org/content/groups/public/" }
     mavenCentral()
   }
 
