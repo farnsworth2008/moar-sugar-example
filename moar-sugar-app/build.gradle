@@ -7,7 +7,7 @@ application {
 }
 
 dependencies {
-  compile project(":moar-sugar")
   compile "commons-dbcp:commons-dbcp:1.4"
+  compile project(":moar-sugar")
   runtime "mysql:mysql-connector-java:8.0.12"
 }
