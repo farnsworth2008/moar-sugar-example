@@ -1,6 +1,6 @@
 package moar.sugar.example;
 
-import static moar.awake.Waker.wake;
+import static moar.awake.WakeUtil.wake;
 import static moar.sugar.Sugar.toUtilDate;
 import java.io.PrintStream;
 import moar.sugar.example.schema.PetRow;
