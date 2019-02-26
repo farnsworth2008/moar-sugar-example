@@ -10,3 +10,4 @@ build
 moar-sugar
 moar_example_app_config.json
 out
+.java-version
