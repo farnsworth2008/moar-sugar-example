@@ -10,6 +10,7 @@
         <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
     </listAttribute>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="moar.sugar.example.MoarSugarExampleApp"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="moar-sugar-app"/>
