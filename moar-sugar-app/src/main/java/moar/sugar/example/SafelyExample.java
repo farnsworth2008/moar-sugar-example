@@ -17,10 +17,11 @@ class SafelyExample
     out.println("Example: Safely invoke a method that may throw");
     var result = safely(() -> methodWithException("two"));
     if (has(result.thrown())) {
-      out.println("we got: " + result.thrown().getMessage());
+      out.println("  we got: " + result.thrown().getMessage());
     } else {
-      out.println("we got: " + result.get());
+      out.println("  we got: " + result.get());
     }
+    out.println();
   }
 
 }
