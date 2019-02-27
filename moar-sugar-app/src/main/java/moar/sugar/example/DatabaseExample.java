@@ -56,7 +56,7 @@ class DatabaseExample
     repo.update(foundPet);
 
     // Find rows using an example row to search
-    foundPet = repo.key(where -> {
+    foundPet = repo.where(where -> {
       where.setName("Tig");
       where.setSpecies("Dog");
     }).find();
