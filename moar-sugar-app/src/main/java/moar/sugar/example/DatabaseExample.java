@@ -80,8 +80,8 @@ class DatabaseExample
       row.setBirth(toUtilDate(2012, 9, 1));
     });
 
-    // Find with a where clause
-    var petList = repo.list("where species=?", "Cat");
+    // Find where species is cat
+    var petList = repo.where(row -> row.setSpecies("cat")).list();
     for (PetRow petItem : petList) {
       out.println("  found: " + petItem.getName() + ", " + petItem.getOwner());
     }
