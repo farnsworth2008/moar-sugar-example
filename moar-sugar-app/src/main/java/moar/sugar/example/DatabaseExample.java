@@ -1,6 +1,6 @@
 package moar.sugar.example;
 
-import static moar.awake.WakeUtil.wake;
+import static moar.awake.WakeUtil.use;
 import static moar.sugar.Sugar.toUtilDate;
 import java.io.PrintStream;
 import moar.sugar.example.schema.PetRow;
@@ -23,10 +23,10 @@ class DatabaseExample
 
     /* Simple way to executeSql with connection open and close handled
      * automatically */
-    wake(ds).executeSql("delete from pet");
+    use(ds).executeSql("delete from pet");
 
     /* Fluent syntax style without the need for a repository of each type. */
-    var pet1 = wake(PetRow.class).of(ds).upsert(row -> {
+    var pet1 = use(PetRow.class).of(ds).upsert(row -> {
       row.setName("Donut");
       row.setOwner("Mark");
       row.setSex("F");
@@ -36,7 +36,7 @@ class DatabaseExample
     out.println("  upsert pet #1: " + pet1.getId() + ", " + pet1.getName());
 
     /* Repository of each type can also be passed around. */
-    var repo = wake(PetRow.class).of(ds);
+    var repo = use(PetRow.class).of(ds);
     PetRow pet2 = repo.define();
     pet2.setName("Tig");
     pet2.setOwner("None");
@@ -66,7 +66,7 @@ class DatabaseExample
     repo.delete(foundPet);
 
     // Upsert multiple rows.
-    wake(ds).upsert(PetRow.class, row -> {
+    use(ds).upsert(PetRow.class, row -> {
       row.setName("Twyla");
       row.setOwner("Kendra");
       row.setSex("F");
