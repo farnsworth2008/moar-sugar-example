@@ -13,7 +13,7 @@ The setup for this project has been tested on MacOS 10.14.3 (18D109), OpenJDK 11
 npm install -g moar-cli
 ```
 
-## Step 2, Clone and initalize example project
+## Step 2, Clone and initialize example project
 
 ```bash
 cd ~/moar-workspace
