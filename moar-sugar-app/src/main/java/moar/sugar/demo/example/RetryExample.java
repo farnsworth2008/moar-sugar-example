@@ -1,26 +1,24 @@
-package moar.sugar.example;
+package moar.sugar.demo.example;
 
 import static moar.sugar.Sugar.retry;
 import java.io.PrintStream;
 
-class RetryExample
+public class RetryExample
     extends
     BaseExample {
 
-  RetryExample(PrintStream out) {
+  public RetryExample(PrintStream out) {
     super(out);
   }
 
   @Override
-  public void run() {
-    out.println("Example: Retry methods");
+  public void demo() {
     try {
       retry(3, 10, () -> methodWithRetryableException("three"));
     } catch (Exception e) {
       out.println("  We tried three times.");
       out.println("  e: " + e.getMessage());
     }
-    out.println();
   }
 
 }

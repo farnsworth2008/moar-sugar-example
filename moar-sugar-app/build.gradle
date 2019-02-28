@@ -2,8 +2,22 @@ plugins {
   id 'application'
 }
 
+apply plugin: 'java'
 application {
-  mainClassName = 'moar.sugar.example.MoarSugarExampleApp'
+  mainClassName = 'moar.sugar.demo.MoarSugarExampleApp'
+}
+
+task fatJar(type: Jar) {
+  manifest {
+    attributes 'Main-Class': 'moar.sugar.demo.MoarSugarExampleApp'
+  }
+  baseName = 'MoarSugarExampleApp'
+  from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+  with jar
+}
+
+run {
+  systemProperties System.getProperties()
 }
 
 dependencies {

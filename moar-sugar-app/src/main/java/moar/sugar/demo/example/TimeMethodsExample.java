@@ -1,21 +1,20 @@
-package moar.sugar.example;
+package moar.sugar.demo.example;
 
 import static moar.sugar.Sugar.require;
 import static moar.sugar.thread.MoarThreadSugar.$;
 import static moar.sugar.thread.MoarThreadSugar.$$;
 import java.io.PrintStream;
 
-class TimeMethodsExample
+public class TimeMethodsExample
     extends
     BaseExample {
 
-  TimeMethodsExample(PrintStream out) {
+  public TimeMethodsExample(PrintStream out) {
     super(out);
   }
 
   @Override
-  public void run() {
-    out.println("Example: Time methods");
+  public void demo() {
     var report = $$(() -> {
       require(() -> {
         $("TrackOne", () -> methodOne("hello 1.1"));
@@ -32,7 +31,6 @@ class TimeMethodsExample
     out.println("  methodOne max of " + time1.getMax() + " ms.");
     out.println("  methodTwo max of " + time2.getMax() + " ms.");
     out.println("  methods took total of " + report.getTime() + " ms.");
-    out.println();
   }
 
 }

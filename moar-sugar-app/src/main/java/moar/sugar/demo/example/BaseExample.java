@@ -1,12 +1,13 @@
-package moar.sugar.example;
+package moar.sugar.demo.example;
 
 import static java.lang.Math.random;
 import static java.lang.Thread.currentThread;
 import static moar.sugar.Sugar.require;
 import static moar.sugar.Sugar.retryable;
 import java.io.PrintStream;
+import moar.sugar.Ansi;
 
-abstract class BaseExample
+public abstract class BaseExample
     implements
     Runnable {
   final PrintStream out;
@@ -14,6 +15,8 @@ abstract class BaseExample
   BaseExample(PrintStream out) {
     this.out = out;
   }
+
+  abstract void demo();
 
   String methodOne(String message) {
     randomSleep();
@@ -52,6 +55,13 @@ abstract class BaseExample
   void randomSleep() {
     var mills = (long) (1000 * random() + 10);
     require(() -> Thread.sleep(mills));
+  }
+
+  @Override
+  public final void run() {
+    out.println(Ansi.blue(this.getClass().getSimpleName()));
+    demo();
+    out.println("\n ");
   }
 
 }

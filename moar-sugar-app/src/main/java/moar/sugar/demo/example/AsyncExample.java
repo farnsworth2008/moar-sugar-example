@@ -1,23 +1,21 @@
 // @formatter:off
-package moar.sugar.example;
+package moar.sugar.demo.example;
 
 import static java.lang.String.format;
 import static moar.sugar.Sugar.require;
 import static moar.sugar.thread.MoarThreadSugar.$;
 import java.io.PrintStream;
 
-class AsyncExample
+public class AsyncExample
     extends
     BaseExample {
 
-  AsyncExample(PrintStream out) {
+  public AsyncExample(PrintStream out) {
     super(out);
   }
 
   @Override
-  public void run() {
-
-    out.println("Example: Async Execution");
+  public void demo() {
 
     /* The 'require( () -> {} )' method makes sure that if anything in the
      * block fails an exception is thrown (with RuntimeException wrapping for
@@ -61,7 +59,6 @@ class AsyncExample
         }
       }
     });
-    out.println();
   }
 
 }

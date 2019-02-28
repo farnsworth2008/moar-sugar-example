@@ -1,4 +1,4 @@
-package moar.sugar.example;
+package moar.sugar.demo.example;
 
 import static moar.sugar.MoarJson.getMoarJson;
 import java.io.File;

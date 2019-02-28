@@ -1,22 +1,21 @@
-package moar.sugar.example;
+package moar.sugar.demo.example;
 
 import static moar.sugar.Sugar.swallow;
 import java.io.PrintStream;
 
-class SwallowExample
+public class SwallowExample
     extends
     BaseExample {
 
-  SwallowExample(PrintStream out) {
+  public SwallowExample(PrintStream out) {
     super(out);
   }
 
   @Override
-  public void run() {
+  public void demo() {
     out.println("Example: Swallow Exception");
     String x = swallow(() -> methodWithException("test"));
     out.println("  x:" + x);
-    out.println();
   }
 
 }
