@@ -11,4 +11,5 @@ else
   filter="$1"
 fi
 
-./gradlew -Dmoar.ansi.enabled=true run --args "$filter"
+./gradlew fatJar
+java -Dmoar.ansi.enabled=true -jar ./moar-sugar-app/build/libs/moar-sugar-app.fat.jar "$@"

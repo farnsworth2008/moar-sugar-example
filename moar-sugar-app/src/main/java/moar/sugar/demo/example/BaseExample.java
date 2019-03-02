@@ -5,7 +5,7 @@ import static java.lang.Thread.currentThread;
 import static moar.sugar.Sugar.require;
 import static moar.sugar.Sugar.retryable;
 import java.io.PrintStream;
-import moar.sugar.Ansi;
+import moar.ansi.Ansi;
 
 public abstract class BaseExample
     implements
