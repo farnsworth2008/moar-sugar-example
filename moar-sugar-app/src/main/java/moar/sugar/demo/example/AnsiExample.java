@@ -8,8 +8,7 @@ import static moar.ansi.Ansi.green;
 import static moar.ansi.Ansi.red;
 import static moar.sugar.Sugar.swallow;
 import java.io.PrintStream;
-import moar.ansi.Ansi;
-import moar.ansi.ProgressBar;
+import moar.ansi.StatusLine;
 import moar.sugar.Sugar;
 
 @SuppressWarnings("javadoc")
@@ -32,10 +31,11 @@ public class AnsiExample
     clearLine(out);
     out.print("Rewritten line");
 
-    ProgressBar progress = Ansi.progress(out, "Demo Progress");
+    StatusLine progress = new StatusLine(out, "Demo Progress");
     for (var i = 0; i < 100; i++) {
       swallow(() -> sleep(100));
-      progress.set((float) i / 100);
+      var completed = i;
+      progress.set(() -> (float) completed / 100);
     }
     progress.clear();
   }
