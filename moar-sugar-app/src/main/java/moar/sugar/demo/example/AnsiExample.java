@@ -6,10 +6,10 @@ import static moar.ansi.Ansi.blue;
 import static moar.ansi.Ansi.clearLine;
 import static moar.ansi.Ansi.green;
 import static moar.ansi.Ansi.red;
+import static moar.sugar.Sugar.require;
 import static moar.sugar.Sugar.swallow;
 import java.io.PrintStream;
 import moar.ansi.StatusLine;
-import moar.sugar.Sugar;
 
 @SuppressWarnings("javadoc")
 public class AnsiExample
@@ -27,7 +27,7 @@ public class AnsiExample
     out.println();
     out.println(format("With %s, %s, %s, and more", red("red"), green("green"), blue("blue")));
     out.println("This line will clear and rewrite in 3 seconds.");
-    Sugar.require(() -> sleep(1000 * 3));
+    require(() -> sleep(1000 * 3));
     clearLine(out);
     out.print("Rewritten line");
 
