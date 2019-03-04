@@ -3,7 +3,6 @@ package moar.sugar.demo.example;
 import static java.lang.String.format;
 import static java.lang.Thread.sleep;
 import static moar.ansi.Ansi.blue;
-import static moar.ansi.Ansi.clearLine;
 import static moar.ansi.Ansi.green;
 import static moar.ansi.Ansi.red;
 import static moar.sugar.Sugar.require;
@@ -26,18 +25,15 @@ public class AnsiExample
     out.println();
     out.println();
     out.println(format("With %s, %s, %s, and more", red("red"), green("green"), blue("blue")));
-    out.println("This line will clear and rewrite in 3 seconds.");
-    require(() -> sleep(1000 * 3));
-    clearLine(out);
-    out.print("Rewritten line");
 
-    StatusLine progress = new StatusLine(out, "Demo Progress");
+    StatusLine status = new StatusLine(out);
+    status.setCount(100, "Demo Progress");
     for (var i = 0; i < 100; i++) {
-      swallow(() -> sleep(100));
-      var completed = i;
-      progress.set(() -> (float) completed / 100);
+      require(() -> status.completeOne(() -> {
+        swallow(() -> sleep(100));
+      }));
     }
-    progress.clear();
+    status.clear();
   }
 
 }
