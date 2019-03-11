@@ -29,9 +29,10 @@ public class AnsiExample
     StatusLine status = new StatusLine(out);
     status.setCount(100, "Demo Progress");
     for (var i = 0; i < 100; i++) {
-      require(() -> status.completeOne(() -> {
+      require(() -> {
         swallow(() -> sleep(100));
-      }));
+        status.completeOne();
+      });
     }
     status.clear();
   }

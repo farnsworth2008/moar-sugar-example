@@ -4,7 +4,6 @@ import static java.lang.String.format;
 import static moar.sugar.Sugar.require;
 import static moar.sugar.thread.MoarThreadSugar.$;
 import java.io.PrintStream;
-import java.util.concurrent.Callable;
 
 public class AsyncExample
     extends

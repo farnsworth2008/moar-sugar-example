@@ -2,7 +2,7 @@ package moar.sugar.demo.example;
 
 import static java.lang.String.format;
 import static moar.ansi.Ansi.green;
-import static moar.awake.WakeUtil.use;
+import static moar.awake.InterfaceUtil.use;
 import static moar.sugar.Sugar.toUtilDate;
 import java.io.PrintStream;
 import moar.sugar.example.schema.PetRow;

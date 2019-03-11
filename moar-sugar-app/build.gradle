@@ -1,12 +1,4 @@
-plugins {
-  id 'application'
-}
-
 apply plugin: 'java'
-
-application {
-  mainClassName = 'moar.sugar.demo.MoarSugarExampleApp'
-}
 
 task fatJar(type: Jar) {
   manifest {
@@ -18,10 +10,6 @@ task fatJar(type: Jar) {
     configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
   }
   with jar
-}
-
-run {
-  systemProperties System.getProperties()
 }
 
 dependencies {
