@@ -26,7 +26,7 @@ public class AnsiExample
     out.println();
     out.println(format("With %s, %s, %s, and more", red("red"), green("green"), blue("blue")));
 
-    StatusLine status = new StatusLine(out);
+    StatusLine status = new StatusLine();
     status.setCount(100, "Demo Progress");
     for (var i = 0; i < 100; i++) {
       require(() -> {
