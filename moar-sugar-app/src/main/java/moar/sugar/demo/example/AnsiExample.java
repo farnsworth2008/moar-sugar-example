@@ -34,7 +34,7 @@ public class AnsiExample
         status.completeOne();
       });
     }
-    status.clear();
+    status.remove();
   }
 
 }
