@@ -3,8 +3,11 @@ package moar.sugar.demo.example;
 import static java.lang.String.format;
 import static moar.ansi.Ansi.green;
 import static moar.awake.InterfaceUtil.use;
+import static moar.sugar.Sugar.require;
 import static moar.sugar.Sugar.toUtilDate;
 import java.io.PrintStream;
+
+import moar.sugar.Sugar;
 import moar.sugar.example.schema.PetRow;
 
 public class DatabaseExample
@@ -23,7 +26,7 @@ public class DatabaseExample
 
     /* Simple way to executeSql with connection open and close handled
      * automatically */
-    use(ds).executeSql("delete from pet");
+    require(() -> use(ds).executeSql("delete from pet"));
 
     /* Fluent syntax style without the need for a repository of each type. */
     var pet1 = use(PetRow.class).of(ds).upsert(row -> {
