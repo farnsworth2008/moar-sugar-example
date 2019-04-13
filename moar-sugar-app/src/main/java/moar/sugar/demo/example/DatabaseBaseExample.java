@@ -31,7 +31,7 @@ abstract class DatabaseBaseExample
     builder.append(config.get("host"));
     builder.append("/");
     builder.append(config.get("db"));
-    builder.append("?useSSL=false&allowPublicKeyRetrieval=true");
+    builder.append("?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC");
     var jdbcUrl = builder.toString();
 
     var bds = new BasicDataSource();
