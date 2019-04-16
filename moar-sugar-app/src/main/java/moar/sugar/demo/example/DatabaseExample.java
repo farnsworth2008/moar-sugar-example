@@ -6,8 +6,6 @@ import static moar.awake.InterfaceUtil.use;
 import static moar.sugar.Sugar.require;
 import static moar.sugar.Sugar.toUtilDate;
 import java.io.PrintStream;
-
-import moar.sugar.Sugar;
 import moar.sugar.example.schema.PetRow;
 
 public class DatabaseExample
